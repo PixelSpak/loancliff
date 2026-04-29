@@ -1,0 +1,21 @@
+{
+  "effective_date": "2026-07-01",
+  "statute": "Reconciliation Act of 2025",
+  "source_note": "https://www.cnbc.com/2026/04/22/student-loan-cap-grad-plus-rules.html",
+  "caps": {
+    "graduate": {
+      "annual": 20500,
+      "aggregate": 100000
+    },
+    "professional": {
+      "annual": 50000,
+      "aggregate": 200000
+    }
+  },
+  "total_federal_aggregate": 257500,
+  "old_grad_plus": {
+    "interest_rate_2025_2026": 0.0894,
+    "loan_fee": 0.04228,
+    "annual_limit": "cost_of_attendance_minus_aid"
+  }
+}

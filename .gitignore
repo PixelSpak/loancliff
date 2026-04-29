@@ -1,0 +1,56 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+build/
+dist/
+
+# environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# testing
+coverage/
+.nyc_output
+
+# project-specific
+data/schools-raw-ipeds.csv
+data/schools-raw-ipeds.zip
+scripts/import-ipeds-cache/
+*.pdf
+!public/**/*.pdf
+
+# raw IPEDS source data (130MB+, re-download via npm run import-ipeds)
+data/raw/*.csv
+data/raw/*.zip
+!data/raw/coa-overrides.csv

@@ -1,0 +1,14 @@
+{
+  "mba":    { "category": "graduate",      "defaultLengthYears": 2, "label": "MBA",                      "shortLabel": "MBA" },
+  "md":     { "category": "professional",  "defaultLengthYears": 4, "label": "MD (Medicine)",            "shortLabel": "MD" },
+  "do":     { "category": "professional",  "defaultLengthYears": 4, "label": "DO (Osteopathic Medicine)","shortLabel": "DO" },
+  "jd":     { "category": "professional",  "defaultLengthYears": 3, "label": "JD (Law)",                 "shortLabel": "JD" },
+  "dds":    { "category": "professional",  "defaultLengthYears": 4, "label": "DDS / DMD (Dentistry)",    "shortLabel": "DDS" },
+  "pharmd": { "category": "professional",  "defaultLengthYears": 4, "label": "PharmD (Pharmacy)",        "shortLabel": "PharmD" },
+  "dvm":    { "category": "professional",  "defaultLengthYears": 4, "label": "DVM (Veterinary)",         "shortLabel": "DVM" },
+  "od":     { "category": "professional",  "defaultLengthYears": 4, "label": "OD (Optometry)",           "shortLabel": "OD" },
+  "phd":    { "category": "graduate",      "defaultLengthYears": 5, "label": "PhD",                      "shortLabel": "PhD" },
+  "ms":     { "category": "graduate",      "defaultLengthYears": 2, "label": "Master of Science",        "shortLabel": "MS" },
+  "ma":     { "category": "graduate",      "defaultLengthYears": 2, "label": "Master of Arts",           "shortLabel": "MA" },
+  "med":    { "category": "graduate",      "defaultLengthYears": 2, "label": "Master of Education",      "shortLabel": "MEd" }
+}

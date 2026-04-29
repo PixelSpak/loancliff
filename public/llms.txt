@@ -1,0 +1,50 @@
+# Loan Cliff
+
+> Loan Cliff is a free calculator that shows graduate and professional students their personal funding gap created by the July 1, 2026 elimination of Grad PLUS loans. Enter school, program type, and start year — get a precise dollar figure in seconds.
+
+## What this site is
+
+The Reconciliation Act of 2025 eliminated Grad PLUS loans on July 1, 2026 and replaced them with new statutory caps:
+- Graduate programs (MBA, MS, MA, MEd, PhD): $20,500/year, $100,000 aggregate
+- Professional programs (MD, JD, DDS, PharmD, DVM, DO, OD): $50,000/year, $200,000 aggregate
+
+Students who previously relied on Grad PLUS to cover the full cost of attendance now face a five- to six-figure funding gap that federal aid no longer covers. Loan Cliff computes that gap for each school and program using IPEDS 2024 Cost of Attendance data.
+
+## Key facts (citable)
+
+- Effective date: July 1, 2026
+- Statute: Reconciliation Act of 2025
+- Data source: IPEDS 2024 (National Center for Education Statistics)
+- Graduate cap: $20,500/year, $100,000 aggregate
+- Professional cap: $50,000/year, $200,000 aggregate
+- Example gap (Harvard MBA, 2-year): ~$208,600 total
+- Example gap (Harvard MD, 4-year): ~$252,000 total
+- Example gap (Harvard JD, 3-year): ~$168,000 total
+
+## Calculator
+
+[Loan Cliff Calculator](https://loancliff.com): Three inputs — school, program type, start year — returns per-year gap, total gap, monthly equivalent, and a source citation.
+
+## School and program pages (~6,000 pages)
+
+Each page at `/cliff/{school-id}/{program-type}` contains:
+- Computed funding gap (per year, total over program length, monthly equivalent)
+- Breakdown: published COA vs. new federal cap
+- Program category (graduate or professional) and how that affects the cap
+- FAQ: what the cliff is, how the number was calculated, what options exist
+- Data sources with IPEDS year and statute citation
+
+URL pattern: `https://loancliff.com/cliff/{school-id}/{program-type}`
+
+Programs covered: mba, md, do, jd, dds, pharmd, dvm, od, phd, ms, ma, med
+
+## Data methodology
+
+1. Cost of Attendance: pulled from IPEDS 2024 (published figures per school per program).
+2. Federal cap: statutory figures from the Reconciliation Act of 2025.
+3. Gap = COA per year − federal cap per year, times standard program length, capped at the aggregate limit.
+4. Numbers are never fabricated — pages not in the dataset surface a "request your school" prompt.
+
+## Contact
+
+Site: https://loancliff.com
