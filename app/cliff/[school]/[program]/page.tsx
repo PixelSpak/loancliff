@@ -5,6 +5,7 @@ import { computeGap } from "@/lib/calc";
 import { caps, programs, schools } from "@/lib/data";
 import { affiliateList } from "@/lib/affiliates";
 import { buildSchemaGraph } from "@/lib/schema";
+import { EmailCapture } from "@/components/EmailCapture";
 import { GapPageAnalytics } from "@/components/GapPageAnalytics";
 import { TrackedAffiliateLink } from "@/components/TrackedAffiliateLink";
 import type { ProgramType } from "@/lib/types";
@@ -255,6 +256,11 @@ export default async function ProgramPage({ params }: Props) {
               Loan Cliff may earn a commission if you refinance through these links.
               This does not affect our data or calculations.
             </p>
+            <EmailCapture
+              schoolId={school}
+              programType={program as ProgramType}
+              totalGap={result.totalGap}
+            />
           </section>
         </div>
 

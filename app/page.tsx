@@ -162,6 +162,7 @@ function SchoolCombobox({
   }
 
   const displayValue = selectedSchool ? selectedSchool.name : query;
+  const listboxId = "school-options";
 
   return (
     <div ref={containerRef} className="relative">
@@ -181,6 +182,7 @@ function SchoolCombobox({
           placeholder="Search for an institution..."
           autoComplete="off"
           aria-autocomplete="list"
+          aria-controls={listboxId}
           aria-expanded={open}
           aria-haspopup="listbox"
           role="combobox"
@@ -210,6 +212,7 @@ function SchoolCombobox({
 
           {/* List */}
           <ul
+            id={listboxId}
             ref={listRef}
             role="listbox"
             className="overflow-y-auto max-h-64"

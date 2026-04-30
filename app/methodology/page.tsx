@@ -67,7 +67,7 @@ export default function MethodologyPage() {
                   Federal Loan Caps — Big Beautiful Bill (2025)
                 </h3>
                 <p className="text-sm text-[#44474d] leading-relaxed">
-                  The "One Big Beautiful Bill" signed into law in 2025 eliminates the
+                  The &ldquo;One Big Beautiful Bill&rdquo; signed into law in 2025 eliminates the
                   Grad PLUS loan program effective July 1, 2026, and replaces it with a
                   new Unsubsidized Stafford loan for graduate students with revised annual
                   and aggregate caps by program category. We use the caps as enacted:
