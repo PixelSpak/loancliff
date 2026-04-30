@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { schools, programs } from "@/lib/data";
+import { trackEvent } from "@/lib/analytics";
 import type { ProgramType } from "@/lib/types";
 
 /* ── constants ── */
@@ -271,15 +272,43 @@ export default function Home() {
   /* reset program when school changes and current program is unavailable */
   const handleSchoolChange = useCallback((id: string) => {
     setSchoolId(id);
+    if (id && schools[id]) {
+      trackEvent("school_selected", {
+        school_id: id,
+        school_name: schools[id].name,
+      });
+    }
     if (programType && id && schools[id] && !schools[id].programs[programType]) {
       setProgramType("");
     }
   }, [programType]);
 
+  function handleProgramChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const nextProgram = e.target.value as ProgramType;
+    setProgramType(nextProgram);
+    if (nextProgram) {
+      trackEvent("program_selected", {
+        school_id: schoolId,
+        program_type: nextProgram,
+        program_label: programs[nextProgram].label,
+      });
+    }
+  }
+
+  function handleStartYearChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setStartYear(Number(e.target.value));
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!schoolId || !programType) return;
     setLoading(true);
+    trackEvent("calculator_started", {
+      school_id: schoolId,
+      school_name: schools[schoolId]?.name,
+      program_type: programType,
+      start_year: startYear,
+    });
     router.push(`/cliff/${schoolId}/${programType}`);
   }
 
@@ -321,7 +350,7 @@ export default function Home() {
               <select
                 id="program"
                 value={programType}
-                onChange={(e) => setProgramType(e.target.value as ProgramType)}
+                onChange={handleProgramChange}
                 disabled={!schoolId}
                 required
                 className={`${inputBase} pl-10 pr-10 appearance-none disabled:opacity-50 disabled:cursor-not-allowed`}
@@ -351,7 +380,7 @@ export default function Home() {
               <select
                 id="year"
                 value={startYear}
-                onChange={(e) => setStartYear(Number(e.target.value))}
+                onChange={handleStartYearChange}
                 className={`${inputBase} pl-10 pr-10 appearance-none`}
               >
                 {START_YEARS.map((y) => (

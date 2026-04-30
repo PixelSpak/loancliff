@@ -18,6 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1.0,
     },
+    {
+      url: "https://loancliff.com/methodology",
+      lastModified: new Date("2026-04-29"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
     ...programPages,
   ];
 }

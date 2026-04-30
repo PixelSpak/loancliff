@@ -60,9 +60,9 @@ export default function PrivacyPolicyPage() {
               Cookies and Analytics
             </h2>
             <p className="mb-3">
-              We use standard analytics tools (e.g., Plausible Analytics or Vercel Analytics)
-              to understand how visitors use the site. These tools may use cookies or local
-              storage. We do not use advertising cookies or cross-site tracking.
+              We use PostHog and Google Analytics to understand how visitors use the site.
+              These tools may use cookies or local storage. We do not use advertising cookies
+              or sell personal information.
             </p>
             <p>
               You can opt out of analytics tracking by enabling &ldquo;Do Not Track&rdquo; in

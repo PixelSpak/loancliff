@@ -5,6 +5,8 @@ import { computeGap } from "@/lib/calc";
 import { caps, programs, schools } from "@/lib/data";
 import { affiliateList } from "@/lib/affiliates";
 import { buildSchemaGraph } from "@/lib/schema";
+import { GapPageAnalytics } from "@/components/GapPageAnalytics";
+import { TrackedAffiliateLink } from "@/components/TrackedAffiliateLink";
 import type { ProgramType } from "@/lib/types";
 
 export const dynamic = "force-static";
@@ -93,6 +95,17 @@ export default async function ProgramPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <GapPageAnalytics
+        schoolId={school}
+        schoolName={result.schoolName}
+        programType={program}
+        programLabel={result.programLabel}
+        category={result.category}
+        startYear={2026}
+        gapPerYear={result.gapPerYear}
+        totalGap={result.totalGap}
+        monthlyEquivalent={result.monthlyEquivalent}
       />
 
       <main className="w-full max-w-3xl mx-auto pt-28 pb-24 px-6 flex flex-col gap-8">
@@ -206,11 +219,13 @@ export default async function ProgramPage({ params }: Props) {
               {affiliateList.map((aff) => {
                 const d = AFFILIATE_DISPLAY[aff.name] ?? { letter: aff.name[0], bg: "#374151", color: "#fff" };
                 return (
-                  <a
+                  <TrackedAffiliateLink
                     key={aff.name}
                     href={aff.url}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
+                    affiliateName={aff.name}
+                    schoolId={school}
+                    programType={program}
+                    totalGap={result.totalGap}
                     className="group flex items-center justify-between p-3 border border-[#c4c6ce] rounded hover:border-[#001229] transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -232,7 +247,7 @@ export default async function ProgramPage({ params }: Props) {
                     <svg className="w-4 h-4 text-[#74777e] group-hover:text-[#001229] transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </a>
+                  </TrackedAffiliateLink>
                 );
               })}
             </div>

@@ -16,7 +16,7 @@ Loan Cliff is a Next.js (App Router) web tool that calculates a graduate or prof
 - **Payments:** Stripe Checkout (payment links for the $19 PDF upsell, no custom checkout UI).
 - **PDF generation:** `@react-pdf/renderer` server-side, on demand.
 - **OG images:** `next/og` (Satori) for share cards.
-- **Analytics:** Plausible (privacy-friendly, no consent banner needed).
+- **Analytics:** PostHog + Google Analytics.
 - **Hosting:** Vercel.
 - **Domain:** loancliff.com.
 
@@ -79,7 +79,9 @@ BREVO_TEMPLATE_REPORT=            # transactional template ID for gap-report ema
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 STRIPE_PAYMENT_LINK_PDF=          # the $19 PDF upsell payment link URL
-NEXT_PUBLIC_PLAUSIBLE_DOMAIN=loancliff.com
+NEXT_PUBLIC_POSTHOG_KEY=
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+NEXT_PUBLIC_GA_MEASUREMENT_ID=
 NEXT_PUBLIC_SITE_URL=https://loancliff.com
 ```
 
@@ -171,3 +173,12 @@ Before saying any task is complete:
 ## Plan reference
 
 The 30-day execution plan is in [PLAN.md](./PLAN.md). Read it once per session to keep priorities aligned.
+
+
+<claude-mem-context>
+# Memory Context
+
+# [loancliff] recent context, 2026-04-30 1:27pm GMT+3
+
+No previous sessions found.
+</claude-mem-context>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
+import { Analytics } from "@/components/Analytics";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -83,6 +84,7 @@ export default function RootLayout({
       className={`${newsreader.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#faf9fc] text-[#1b1c1e]">
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
