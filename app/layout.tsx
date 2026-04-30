@@ -25,6 +25,10 @@ export const metadata: Metadata = {
   description:
     "The July 2026 elimination of Grad PLUS loans created five- to six-figure funding gaps for med, law, MBA, and other grad students. Calculate your personal gap in three inputs.",
   metadataBase: new URL("https://loancliff.com"),
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     siteName: "Loan Cliff",
     type: "website",
