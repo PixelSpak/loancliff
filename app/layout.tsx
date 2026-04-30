@@ -64,13 +64,12 @@ const siteSchema = {
   ],
 };
 
-const NAV_LINKS = ["Calculators", "Analysis", "Resources", "Support"];
-const FOOTER_LINKS = [
-  "Methodology",
-  "Privacy Policy",
-  "Terms of Service",
-  "Disclaimer",
-  "Affiliate Disclosure",
+const FOOTER_LINKS: { label: string; href: string }[] = [
+  { label: "Methodology",        href: "/methodology" },
+  { label: "Privacy Policy",     href: "/privacy-policy" },
+  { label: "Terms of Service",   href: "/terms-of-service" },
+  { label: "Disclaimer",         href: "/disclaimer" },
+  { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
 ];
 
 export default function RootLayout({
@@ -91,7 +90,7 @@ export default function RootLayout({
 
         {/* ── Header ── */}
         <header className="bg-white border-b border-[#e2e8f0] fixed top-0 w-full z-50 h-16">
-          <div className="max-w-5xl mx-auto px-8 h-full flex items-center justify-between">
+          <div className="max-w-5xl mx-auto px-6 sm:px-8 h-full flex items-center justify-between">
             {/* Wordmark */}
             <Link
               href="/"
@@ -100,32 +99,21 @@ export default function RootLayout({
               Loan Cliff
             </Link>
 
-            {/* Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {NAV_LINKS.map((label, i) => (
-                i === 0 ? (
-                  <Link
-                    key={label}
-                    href="/"
-                    className="text-sm text-[#001229] border-b-2 border-[#001229] pb-0.5 font-medium"
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <span
-                    key={label}
-                    className="text-sm text-[#9ca3af] cursor-default select-none"
-                  >
-                    {label}
-                  </span>
-                )
-              ))}
+            {/* Minimal nav — only real pages */}
+            <nav className="flex items-center gap-6">
+              <Link
+                href="/methodology"
+                className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#44474d] hover:text-[#001229] transition-colors"
+              >
+                Methodology
+              </Link>
+              <Link
+                href="/affiliate-disclosure"
+                className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#44474d] hover:text-[#001229] transition-colors hidden sm:block"
+              >
+                Disclosures
+              </Link>
             </nav>
-
-            {/* Log In */}
-            <button className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#001229] hover:opacity-70 transition-opacity">
-              Log In
-            </button>
           </div>
         </header>
 
@@ -133,23 +121,26 @@ export default function RootLayout({
         {children}
 
         {/* ── Footer ── */}
-        <footer className="mt-auto border-t border-[#e2e8f0] bg-[#f8fafc] py-12 px-8">
-          <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
-            <span className="font-serif text-base font-semibold text-[#1b1c1e]">
+        <footer className="mt-auto border-t border-[#e2e8f0] bg-[#f8fafc] py-12 px-6 sm:px-8">
+          <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
+            <Link
+              href="/"
+              className="font-serif text-base font-semibold text-[#1b1c1e] hover:opacity-75 transition-opacity"
+            >
               Loan Cliff
-            </span>
-            <nav className="flex flex-wrap justify-center gap-6">
-              {FOOTER_LINKS.map((label) => (
-                <a
-                  key={label}
-                  href="#"
-                  className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b7280] hover:text-[#1b1c1e] transition-colors"
+            </Link>
+            <nav className="flex flex-wrap justify-center gap-x-5 gap-y-3">
+              {FOOTER_LINKS.map(({ label, href }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b7280] hover:text-[#1b1c1e] transition-colors whitespace-nowrap"
                 >
                   {label}
-                </a>
+                </Link>
               ))}
             </nav>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9ca3af]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9ca3af] max-w-sm leading-relaxed">
               © 2026 Loan Cliff Financial Research. All rights reserved.
               Data sources: Department of Education, IPEDS.
             </p>
