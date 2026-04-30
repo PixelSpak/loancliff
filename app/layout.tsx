@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Newsreader, Plus_Jakarta_Sans } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -60,6 +64,15 @@ const siteSchema = {
   ],
 };
 
+const NAV_LINKS = ["Calculators", "Analysis", "Resources", "Support"];
+const FOOTER_LINKS = [
+  "Methodology",
+  "Privacy Policy",
+  "Terms of Service",
+  "Disclaimer",
+  "Affiliate Disclosure",
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -68,24 +81,80 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[#faf9fc] text-[#1b1c1e]">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
         />
-        <header className="border-b">
-          <div className="max-w-2xl mx-auto px-6 h-12 flex items-center justify-between">
-            <a href="/" className="text-base font-bold tracking-tight hover:opacity-80 transition-opacity">
+
+        {/* ── Header ── */}
+        <header className="bg-white border-b border-[#e2e8f0] fixed top-0 w-full z-50 h-16">
+          <div className="max-w-5xl mx-auto px-8 h-full flex items-center justify-between">
+            {/* Wordmark */}
+            <Link
+              href="/"
+              className="font-serif text-lg font-semibold text-[#001229] uppercase tracking-[0.15em] hover:opacity-75 transition-opacity"
+            >
               Loan Cliff
-            </a>
-            <a href="/" className="text-sm text-blue-600 hover:underline">
-              Calculate yours →
-            </a>
+            </Link>
+
+            {/* Nav */}
+            <nav className="hidden md:flex items-center gap-8">
+              {NAV_LINKS.map((label, i) => (
+                i === 0 ? (
+                  <Link
+                    key={label}
+                    href="/"
+                    className="text-sm text-[#001229] border-b-2 border-[#001229] pb-0.5 font-medium"
+                  >
+                    {label}
+                  </Link>
+                ) : (
+                  <span
+                    key={label}
+                    className="text-sm text-[#9ca3af] cursor-default select-none"
+                  >
+                    {label}
+                  </span>
+                )
+              ))}
+            </nav>
+
+            {/* Log In */}
+            <button className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#001229] hover:opacity-70 transition-opacity">
+              Log In
+            </button>
           </div>
         </header>
+
+        {/* ── Page content ── */}
         {children}
+
+        {/* ── Footer ── */}
+        <footer className="mt-auto border-t border-[#e2e8f0] bg-[#f8fafc] py-12 px-8">
+          <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
+            <span className="font-serif text-base font-semibold text-[#1b1c1e]">
+              Loan Cliff
+            </span>
+            <nav className="flex flex-wrap justify-center gap-6">
+              {FOOTER_LINKS.map((label) => (
+                <a
+                  key={label}
+                  href="#"
+                  className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b7280] hover:text-[#1b1c1e] transition-colors"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9ca3af]">
+              © 2026 Loan Cliff Financial Research. All rights reserved.
+              Data sources: Department of Education, IPEDS.
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );
