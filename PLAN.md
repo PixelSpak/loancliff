@@ -8,63 +8,100 @@ The white space: explainer articles exist (Saving for College, Fastweb, Earnest,
 
 The intended outcome: a fully automated web tool that ranks for and gets cited on grad-school cost queries, captures emails for a Brevo-driven nurture sequence, and converts at meaningful rates against student-loan refi affiliate programs ($150–$400 CPA per funded loan). Target: positive unit economics within 30 days, scalable beyond.
 
-## Build phases
+## Current execution plan
 
-### Phase 1 — Calculator MVP (days 1–3)
-- Next.js 15 app scaffold, Tailwind v4, shadcn/ui, TypeScript strict.
-- `app/page.tsx`: landing + 3-input form (program type, school select, start year).
-- `lib/calc.ts`: pure function, well-tested, returns per-year gap, total gap, monthly equivalent, citation.
-- `lib/share-card.tsx`: Satori OG image with the giant red number. The artifact IS the marketing.
-- `data/schools.json`: ~6,000 programs from IPEDS public data. One-time scrape/import script in `scripts/import-ipeds.ts`.
-- `data/caps.json`: statutory caps as a typed JSON reference (grad vs professional, annual vs aggregate, by year).
-- Deploy to Vercel on day 3 with the domain `loancliff.com` connected.
+The MVP is live at loancliff.com. Phases 1–4 are complete. The plan below covers what remains: pre-launch verification, then the four-wave GTM strategy. Full spec: `docs/superpowers/specs/2026-05-01-prelaunch-gtm-design.md`.
 
-### Phase 2 — Programmatic SEO (days 4–7)
-- `app/cliff/[school]/[program]/page.tsx`: dynamic route, `force-static`, `generateStaticParams` produces all ~6,000 paths from the dataset at build time.
-- `lib/schema.ts`: `EducationalOccupationalProgram`, `MonetaryAmount`, `BreadcrumbList`, `FAQPage` JSON-LD per page.
-- `app/sitemap.ts`: programmatic sitemap (split if > 50k URLs, but we're under).
-- `app/robots.ts`: allow all, point to sitemap.
-- Submit sitemap to Google Search Console + Bing Webmaster Tools.
-- Validate 10 random sampled pages against schema.org validator.
+---
 
-### Phase 3 — Email funnel (days 8–10)
-- Brevo account, list created, transactional template for the gap-report email created in their UI.
-- `lib/brevo.ts`: typed client wrapper.
-- `app/api/email-report/route.ts`: POST handler. Generates PDF via `lib/pdf.tsx`, sends via Brevo transactional API, adds contact to list with attributes (`school`, `program`, `start_year`, `gap_total`).
-- `components/EmailCapture.tsx`: single field on results page, framed *"Email me this gap report as a PDF + alert me if refi rates drop below 6%."*
-- Brevo automation workflow (configured in dashboard, not code): 7-email sequence over 30 days. Welcome → cliff explainer → refi side-by-side → school-specific scholarships → income-share alternatives → defer-a-year analysis → 30-day check-in.
-- Every email body includes affiliate links with UTMs.
+### Pre-Launch Checklist (complete before any public distribution)
 
-### Phase 4 — Monetization plumbing (days 8–10, parallel with Phase 3)
-- `lib/affiliates.ts`: typed map of all approved affiliate links with UTM parameters.
-- Apply to affiliate programs in this priority order:
-  1. **Credible** — public form at credible.com/partners — $240/funded loan
-  2. **ELFI** — public form — ~$400/funded refi
-  3. **LendKey** — public form — ~$100–200/funded loan
-  4. **SoFi** via Impact or CJ network — $150/funded refi
-  5. **Earnest** — email partnerships@earnest.com — variable $200–400
-  6. **Juno** — partnerships@joinjuno.com — partner program; $300/refi as personal-referral fallback
-- Stripe payment link created for the $19 PDF upsell.
-- `app/api/stripe-webhook/route.ts`: on `checkout.session.completed`, move the contact to a "buyer" segment in Brevo and trigger the auto-fulfillment email with the personalized PDF attached.
+#### Technical
+- [x] `npm run typecheck` + `npm run build` + `npm test` — all pass, zero errors. Build generates 6,227 static pages.
+- [ ] Gap number spot-check — verify 5 pages manually: Harvard Med, Stanford Law, NYU Dental, UPenn Wharton MBA, UChicago PhD
+- [x] Resolve Next.js version — locked at `next@16.2.4` (the version the project is built on).
 
-### Phase 5 — SEO content (days 11–14)
-- 8 long-form MDX articles in `content/articles/`:
-  1. What the July 2026 Grad PLUS elimination means for med students
-  2. Same, for law students
-  3. Same, for MBA students
-  4. Same, for dental students
-  5. Same, for PhD students (slightly different angle: stipend + cap math)
-  6. Same, for pharmacy students
-  7. Private vs federal student loans in 2026: the new math
-  8. Should you defer your start date by a year? A decision framework
-- Each article: 1,800–2,500 words, internal links to relevant programmatic pages, embedded calculator widget, FAQ block with FAQ schema, 2–4 affiliate placements.
+#### SEO / Discoverability
+- [ ] Bing Webmaster Tools — submit `https://loancliff.com/sitemap.xml`
+- [ ] Schema.org validation — validate 10 random programmatic pages at validator.schema.org; confirm `EducationalOccupationalProgram`, `MonetaryAmount`, `BreadcrumbList`, `FAQPage` all present
+- [ ] Google Search Console — confirm pages are being discovered/indexed, set up weekly email digest
 
-### Phase 6 — Distribution sprint (days 15–30)
-- **Reddit (1 post/day, rotated):** r/premed, r/medicalschool, r/lawschooladmissions, r/whitecoatinvestor, r/MBA, r/PhD, r/lawschool, r/dentistry, r/pharmacy, r/Optometry, r/vetschool. Each post is a screenshot of the gap for a specific school + the tool link + a genuinely useful comment. Don't burn any one community.
-- **TikTok (1 post/day, faceless):** screen-recording of the calculator with AI voiceover ("Plugging in Stanford Law, Class of 2029…"). Use ElevenLabs or similar for the voice.
-- **Newsletter pitches (1 per day):** Morning Brew, Money With Katie, The Hustle's tools section, NerdWallet, Bankrate, the WSJ student-loan beat reporter.
-- **ProductHunt launch on day 25** to capture residual SEO juice and hopefully a mid-tier finance newsletter pickup.
-- **Mediavine application on day 30** (requires 50k sessions / 30 days for Journey tier — achievable if even one TikTok or Reddit thread breaks out). Until then: AdSense + the affiliate links + the $19 PDF upsell.
+#### Email Funnel
+- [ ] Brevo end-to-end test — submit real email on live site, confirm PDF generates, email arrives, contact created with correct attributes
+- [ ] Brevo automation — confirm 7-email sequence is live in dashboard and fires on new contact
+
+#### Monetization
+- [ ] Stripe webhook decision — build `app/api/stripe-webhook/route.ts` now, or explicitly defer $19 upsell and remove the payment link from UI
+- [ ] Affiliate links audit — URLs are placeholder direct links; Ilai will replace with network-approved deep links. UTM structure in `lib/affiliates.ts` is correct.
+
+#### Engineering
+- [ ] Run `/review` — full code review pass before treating as production-ready
+
+---
+
+### Wave 1 — Earned Media Outreach (Week 1, ongoing)
+
+Goal: one journalist, newsletter, or finance blogger cites or features the tool before June.
+
+- Draft 3 outreach templates (journalist / newsletter / blogger) — AI-written, personalized per send
+- Target list of 30 contacts: CNBC, Bloomberg, WSJ, Forbes Advisor, MarketWatch, Morning Brew, Money With Katie, The Hustle, NerdWallet, Bankrate, Student Loan Planner, Poets & Quants, GradCafe, Student Doctor Network, TUN.com
+- Send 5 emails/week, track in spreadsheet
+- Hook: specific gap number for a recognizable school + July 1 deadline as urgency
+- Budget trigger: if a pickup drives 5k+ sessions in 48h → $200 boost on that platform
+
+---
+
+### Wave 2 — SEO Content Build (Weeks 1–2)
+
+Goal: 8 MDX articles live in `content/articles/`, ranking for high-intent grad funding queries.
+
+Articles (priority order):
+1. `what-grad-plus-elimination-means-for-med-students.mdx`
+2. `what-grad-plus-elimination-means-for-law-students.mdx`
+3. `what-grad-plus-elimination-means-for-mba-students.mdx`
+4. `what-grad-plus-elimination-means-for-dental-students.mdx`
+5. `what-grad-plus-elimination-means-for-phd-students.mdx`
+6. `what-grad-plus-elimination-means-for-pharmacy-students.mdx`
+7. `private-vs-federal-student-loans-2026-new-math.mdx`
+8. `should-you-defer-your-grad-school-start-year.mdx`
+
+Each article: 1,800–2,500 words, embedded calculator, 2–4 affiliate placements with UTMs, FAQ schema block, 3–5 internal links to programmatic pages.
+
+Additional tasks:
+- [ ] Add `llms.txt` to `/public` — signals AI crawlers (Perplexity, ChatGPT) what to cite
+
+---
+
+### Wave 3 — Shock Number Social Content (Weeks 2–3)
+
+Goal: 30 pieces of content batch-produced, scheduled 1/day across X, Instagram Reels, TikTok for 6 weeks.
+
+Format: screen recording of calculator for a recognizable school + ElevenLabs AI voiceover + the red gap number on screen 3+ seconds + CTA to loancliff.com.
+
+School mix: 10 Ivy/brand-name, 10 mid-tier state schools, 10 program-specific (dental/pharmacy/PhD).
+
+Tools: ElevenLabs free tier (voice) + CapCut (assembly) + Buffer free tier (scheduling).
+
+Budget trigger: if any post exceeds 50k views → $100–200 boost on that platform.
+
+---
+
+### Wave 4 — Reddit (Week 3+, conditional)
+
+Only activate if Waves 1–3 show slow traction.
+
+Subreddits: r/premed, r/medicalschool, r/lawschooladmissions, r/whitecoatinvestor, r/MBA, r/PhD, r/lawschool, r/dentistry, r/pharmacy.
+
+Format: genuine, specific post with school-relevant gap number. Tool as a resource, not a pitch. Never same link twice in one sub within 30 days.
+
+---
+
+### Ongoing (weekly, <10 min)
+
+- PostHog + GA: top pages, traffic sources, email capture rate, affiliate click rate
+- Brevo: email 1 open rate (target >30%), unsubscribe rate
+- GSC: crawl errors, manual actions
+- Affiliate dashboards: UTM tracking firing, click data visible
 
 ## Critical files
 

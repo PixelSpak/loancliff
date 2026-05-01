@@ -3,6 +3,7 @@ import { computeGap } from "@/lib/calc";
 import { caps, programs, schools } from "@/lib/data";
 import { renderGapReportPdf } from "@/lib/pdf";
 import { sendGapReportEmail, upsertBrevoContact } from "@/lib/brevo";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { ProgramType } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -48,6 +49,17 @@ function filenameFor(schoolId: string, programType: ProgramType) {
 
 export async function POST(request: Request) {
   try {
+    const ip =
+      (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
+      "unknown";
+
+    if (!checkRateLimit(ip, 5, 60_000)) {
+      return NextResponse.json(
+        { ok: false, error: "Too many requests. Please wait a minute and try again." },
+        { status: 429 }
+      );
+    }
+
     const input = parseRequest(await request.json());
 
     if (!input) {
@@ -75,18 +87,18 @@ export async function POST(request: Request) {
     const pdf = await renderGapReportPdf(result);
     const pdfBase64 = pdf.toString("base64");
 
-    await upsertBrevoContact({
-      email: input.email,
-      result,
-      resultUrl,
-    });
-
     await sendGapReportEmail({
       email: input.email,
       result,
       resultUrl,
       pdfBase64,
       filename: filenameFor(input.schoolId, input.programType),
+    });
+
+    await upsertBrevoContact({
+      email: input.email,
+      result,
+      resultUrl,
     });
 
     return NextResponse.json({ ok: true });

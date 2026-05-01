@@ -45,6 +45,13 @@ coverage/
 
 # project-specific
 data/schools-raw-ipeds.csv
+
+# local-only design/branding assets (not committed to repo)
+branding/
+stitch_the_grad_funding_gap/
+stitch_the_grad_funding_gap.zip
+docs/brevo-automation-setup.md
+docs/brevo-sequence-html/
 data/schools-raw-ipeds.zip
 scripts/import-ipeds-cache/
 *.pdf
@@ -54,3 +61,4 @@ scripts/import-ipeds-cache/
 data/raw/*.csv
 data/raw/*.zip
 !data/raw/coa-overrides.csv
+.gstack/

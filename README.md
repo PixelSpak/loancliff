@@ -6,7 +6,13 @@ Three inputs (program type, school, start year) → one giant red number → nex
 
 ## Status
 
-Pre-build. See [PLAN.md](./PLAN.md) for the full 30-day execution plan.
+MVP implementation in progress. The calculator, static programmatic result pages, gap calculation tests, SEO plumbing, affiliate-link map, analytics wiring, Brevo PDF email route, legal pages, and Brevo email-sequence docs are present.
+
+Current generated corpus: **1,789 schools/institutions**, **12 program types**, **6,208 program pages** from committed JSON data.
+
+Open before launch: verify `npm run typecheck`, `npm test`, and `npm run build`; audit the data/import provenance; configure Brevo env/dashboard; replace placeholder affiliate URLs with approved network links; build Stripe webhook; add the planned MDX SEO articles; validate Schema.org output; spot-check sampled gap numbers manually; deploy and connect/search-submit `loancliff.com`.
+
+See [AGENTS.md](./AGENTS.md) for the current agent handoff and [PLAN.md](./PLAN.md) for the full 30-day execution plan.
 
 ## For AI agents
 

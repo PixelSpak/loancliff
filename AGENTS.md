@@ -6,6 +6,46 @@ Conventions for any AI coding agent (Claude Code, Codex, Cursor, Aider, etc.) wo
 
 Loan Cliff is a Next.js (App Router) web tool that calculates a graduate or professional student's personal funding gap created by the July 1, 2026 elimination of Grad PLUS loans. Users enter three inputs and see a personalized number, with next-step affiliate links to private student-loan refinancers. Programmatic SEO is a primary distribution channel: one URL per accredited US grad/professional program (~6,000 pages) generated at build time from public IPEDS data. Email capture funnels users into a 7-email automated nurture sequence via Brevo. No user accounts, no DB writes from users, fully automated. Monetization: refi affiliate links ($150–$400 CPA), display ads (after Mediavine threshold), $19 PDF upsell.
 
+## Current project status (2026-05-01)
+
+This repo is no longer pre-build. The core MVP is implemented and the next agent should treat the project as an active Next app that needs verification, polish, and deployment work.
+
+Completed:
+
+- Next app scaffold exists with App Router pages, strict TypeScript config, Tailwind CSS v4, ESLint, Vitest, and npm scripts.
+- Homepage calculator is implemented in `app/page.tsx` with school search, program filtering by selected school, start-year selector, analytics events, and navigation to program result pages.
+- Static programmatic SEO route is implemented in `app/cliff/[school]/[program]/page.tsx` with `force-static`, `dynamicParams = false`, and `generateStaticParams()` from committed JSON data.
+- Current dataset has 1,789 schools/institutions, 12 program types, and 6,208 generated program pages from `data/schools.json` and `data/programs.json`.
+- Core gap calculation exists in `lib/calc.ts` and includes aggregate-cap handling. Unit tests exist in `lib/calc.test.ts`.
+- Program pages include the large gap number, calculation breakdown, affiliate link panel, FAQ copy, other-program links, and email capture.
+- SEO plumbing exists: `app/sitemap.ts`, `app/robots.txt/route.ts`, per-page metadata, OG image route at `app/cliff/[school]/[program]/opengraph-image.tsx`, `lib/share-card.tsx`, and JSON-LD helpers in `lib/schema.ts`.
+- Brevo/PDF path exists: `components/EmailCapture.tsx`, `app/api/email-report/route.ts`, `lib/brevo.ts`, and `lib/pdf.tsx`.
+- Affiliate links are centralized in `lib/affiliates.ts` with UTMs and click tracking through `components/TrackedAffiliateLink.tsx`.
+- Analytics wiring exists for PostHog/GA through `lib/analytics.ts`, `components/Analytics.tsx`, `components/AnalyticsEvents.tsx`, and `components/GapPageAnalytics.tsx`.
+- Legal/static pages exist: methodology, privacy policy, terms of service, disclaimer, affiliate disclosure, health route, favicon/icons.
+- Brevo funnel docs and seven HTML email templates exist under `docs/`.
+- Branding assets exist under `branding/`. Stitch/design reference artifacts exist under `stitch_the_grad_funding_gap/`.
+
+Known open items / verify before shipping:
+
+See `PLAN.md` for the full ordered pre-launch checklist and GTM waves. Summary of blocking items:
+
+- [ ] `npm run typecheck` + `npm run build` + `npm test` must all pass before any public distribution
+- [ ] Next.js version: repo has `next@16.2.4`, stack spec says 15 — decision required
+- [ ] Gap number spot-check: 5 pages manually verified against published COA math
+- [ ] Bing Webmaster Tools: sitemap not yet submitted
+- [ ] Schema.org validation: 10 programmatic pages not yet validated externally
+- [ ] Brevo end-to-end: credentials in Vercel, but live email delivery not yet verified; templates/lists need dashboard setup
+- [ ] Brevo 7-email automation: must be live in dashboard before launch
+- [ ] Stripe webhook (`app/api/stripe-webhook/route.ts`): not built — decide build now or defer $19 upsell
+- [ ] Affiliate links: placeholder/direct URLs, not confirmed network-approved deep links. All must at least resolve on live site.
+- [ ] `/review` engineering pass: required before treating as production-ready
+- [ ] `content/articles/` does not exist yet — 8 MDX SEO articles are Wave 2 of the GTM plan
+- [ ] `llms.txt` not yet added to `/public`
+- [ ] `data/schools.json` IPEDS provenance not yet audited for public accuracy claims
+- [ ] Site is live at loancliff.com. Google Search Console sitemap submitted. Bing submission pending.
+- [ ] Untracked local files: `branding/`, `docs/brevo-automation-setup.md`, `docs/brevo-sequence-html/`, `stitch_the_grad_funding_gap/`, `stitch_the_grad_funding_gap.zip`. Do not delete or overwrite without asking.
+
 ## Stack (locked)
 
 - **Framework:** Next.js 15 (App Router, RSC, Server Actions)
@@ -165,8 +205,8 @@ If a decision touches: the calculation logic, the affiliate link structure, the 
 ## Verification before claiming done
 
 Before saying any task is complete:
-1. `bun run typecheck` passes with zero errors.
-2. `bun run build` completes (this catches programmatic-page generation issues).
+1. `npm run typecheck` passes with zero errors.
+2. `npm run build` completes (this catches programmatic-page generation issues).
 3. If you touched `lib/calc.ts`: unit tests pass.
 4. If you touched a programmatic route: spot-check 3 generated pages locally and confirm the gap number matches a manual calculation.
 
@@ -178,7 +218,7 @@ The 30-day execution plan is in [PLAN.md](./PLAN.md). Read it once per session t
 <claude-mem-context>
 # Memory Context
 
-# [loancliff] recent context, 2026-04-30 1:27pm GMT+3
+# [loancliff] recent context, 2026-05-01 11:21am GMT+3
 
 No previous sessions found.
 </claude-mem-context>
