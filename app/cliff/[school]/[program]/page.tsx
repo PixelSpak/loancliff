@@ -109,7 +109,7 @@ export default async function ProgramPage({ params }: Props) {
         monthlyEquivalent={result.monthlyEquivalent}
       />
 
-      <main className="w-full max-w-3xl mx-auto pt-28 pb-24 px-6 flex flex-col gap-8">
+      <main className="w-full max-w-5xl mx-auto pt-28 pb-24 px-6 sm:px-8 flex flex-col gap-8">
 
         {/* ── Breadcrumb ── */}
         <nav aria-label="Breadcrumb" className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#74777e] flex items-center gap-2">
@@ -155,7 +155,7 @@ export default async function ProgramPage({ params }: Props) {
         </div>
 
         {/* ── Two-column grid ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
           {/* Breakdown */}
           <section
