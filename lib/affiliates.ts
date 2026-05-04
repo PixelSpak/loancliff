@@ -16,7 +16,7 @@ export const affiliates = {
   },
   elfi: {
     name: "ELFI",
-    url: `https://www.elfi.com/refinance-student-loans/?${BASE}&utm_content=elfi`,
+    url: `https://www.elfi.com/?code=39540&${BASE}&utm_content=elfi`,
     description: "Among the lowest fixed rates available for grad school refi",
     cta: "See lowest rates →",
   },
