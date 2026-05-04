@@ -4,6 +4,11 @@ import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content/learn");
 
+export interface FAQ {
+  q: string;
+  a: string;
+}
+
 export interface PostMeta {
   slug: string;
   title: string;
@@ -12,6 +17,7 @@ export interface PostMeta {
   category: string;
   readTime: string;
   order: number;
+  faqs: FAQ[];
 }
 
 export interface Post extends PostMeta {
@@ -44,6 +50,7 @@ export function getPostMeta(slug: string): PostMeta {
     category: (data.category as string) ?? "general",
     readTime: (data.readTime as string) ?? "6 min read",
     order: (data.order as number) ?? 99,
+    faqs: (data.faqs as FAQ[]) ?? [],
   };
 }
 
@@ -59,6 +66,7 @@ export function getPost(slug: string): Post {
     category: (data.category as string) ?? "general",
     readTime: (data.readTime as string) ?? "6 min read",
     order: (data.order as number) ?? 99,
+    faqs: (data.faqs as FAQ[]) ?? [],
     content,
   };
 }
