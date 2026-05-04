@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Analytics } from "@/components/Analytics";
+import { CookieConsentWrapper } from "@/components/CookieConsentWrapper";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -65,6 +65,7 @@ const siteSchema = {
 };
 
 const FOOTER_LINKS: { label: string; href: string }[] = [
+  { label: "Learn",              href: "/learn" },
   { label: "Methodology",        href: "/methodology" },
   { label: "Privacy Policy",     href: "/privacy-policy" },
   { label: "Terms of Service",   href: "/terms-of-service" },
@@ -83,7 +84,7 @@ export default function RootLayout({
       className={`${newsreader.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#faf9fc] text-[#1b1c1e]">
-        <Analytics />
+        <CookieConsentWrapper />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
@@ -107,6 +108,12 @@ export default function RootLayout({
                 className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#44474d] hover:text-[#001229] transition-colors"
               >
                 Methodology
+              </Link>
+              <Link
+                href="/learn"
+                className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#44474d] hover:text-[#001229] transition-colors hidden sm:block"
+              >
+                Learn
               </Link>
               <Link
                 href="/affiliate-disclosure"
