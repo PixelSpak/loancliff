@@ -61,13 +61,13 @@ body {
   margin-bottom: 1.25rem;
   color: #1b1c1e;
 }
-.prose-article a {
+.prose-article a:not(.aff-cta) {
   color: #001229;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.prose-article a:hover {
+.prose-article a:not(.aff-cta):hover {
   color: #0f2744;
 }
 .prose-article ul {

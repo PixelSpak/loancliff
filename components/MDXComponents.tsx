@@ -52,7 +52,7 @@ export function AffiliateCTA({
         href={href}
         target="_blank"
         rel="noopener noreferrer sponsored"
-        className="shrink-0 min-w-[130px] text-center bg-[#001229] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#0f2744] transition-colors whitespace-nowrap"
+        className="aff-cta shrink-0 min-w-[130px] text-center bg-[#001229] !text-white no-underline text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#0f2744] transition-colors whitespace-nowrap"
       >
         {cta}
       </a>
