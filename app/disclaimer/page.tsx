@@ -89,7 +89,7 @@ export default function DisclaimerPage() {
             <p>
               We make reasonable efforts to keep cost-of-attendance data and loan cap
               information current and accurate. However, data may contain errors or may not
-              reflect the most recent institutional changes. Loan Cliff Financial Research
+              reflect the most recent institutional changes. Spak Labs
               makes no representation or warranty regarding the accuracy, completeness, or
               timeliness of any information on the Site.
             </p>
@@ -110,11 +110,20 @@ export default function DisclaimerPage() {
 
           <section>
             <h2 className="font-serif text-xl font-semibold text-[#001229] mb-3">Contact</h2>
-            <p>
+            <p className="mb-3">
               Questions about this disclaimer:{" "}
               <a href="mailto:hello@loancliff.com" className="text-[#001229] underline hover:opacity-70">
                 hello@loancliff.com
               </a>
+            </p>
+            <p>
+              LoanCliff is operated by Spak Labs
+              <br />
+              353 Lexington Avenue, 4th Floor PMB505
+              <br />
+              New York, NY 10016
+              <br />
+              United States
             </p>
           </section>
         </div>

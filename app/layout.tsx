@@ -50,11 +50,20 @@ const siteSchema = {
     {
       "@type": "Organization",
       "@id": "https://loancliff.com/#organization",
-      name: "Loan Cliff",
+      name: "LoanCliff",
+      legalName: "Spak Labs",
       url: "https://loancliff.com",
       logo: {
         "@type": "ImageObject",
         url: "https://loancliff.com/og-default.png",
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "353 Lexington Avenue, 4th Floor PMB505",
+        addressLocality: "New York",
+        addressRegion: "NY",
+        postalCode: "10016",
+        addressCountry: "US",
       },
       sameAs: [
         "https://x.com/loancliffcalc",
@@ -173,7 +182,7 @@ export default function RootLayout({
               </a>
             </div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9ca3af] max-w-sm leading-relaxed">
-              © 2026 Loan Cliff Financial Research. All rights reserved.
+              © 2026 Spak Labs. LoanCliff is operated by Spak Labs.
               Data sources: Department of Education, IPEDS.
             </p>
           </div>

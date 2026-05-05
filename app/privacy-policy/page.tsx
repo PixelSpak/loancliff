@@ -24,11 +24,11 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="font-serif text-xl font-semibold text-[#001229] mb-3">Overview</h2>
             <p>
-              Loan Cliff (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates
-              loancliff.com, a free calculator tool that helps graduate students estimate the
-              funding gap created by the elimination of Grad PLUS loans. We are committed to
-              protecting your privacy. This policy explains what data we collect, how we use it,
-              and your rights regarding that data.
+              LoanCliff is operated by Spak Labs (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or
+              &ldquo;our&rdquo;). We operate loancliff.com, a free calculator tool that
+              helps graduate students estimate the funding gap created by the elimination of
+              Grad PLUS loans. We are committed to protecting your privacy. This policy explains
+              what data we collect, how we use it, and your rights regarding that data.
             </p>
           </section>
 
@@ -161,11 +161,20 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-serif text-xl font-semibold text-[#001229] mb-3">Contact</h2>
-            <p>
+            <p className="mb-3">
               Questions about this privacy policy:{" "}
               <a href="mailto:hello@loancliff.com" className="text-[#001229] underline hover:opacity-70">
                 hello@loancliff.com
               </a>
+            </p>
+            <p>
+              LoanCliff is operated by Spak Labs
+              <br />
+              353 Lexington Avenue, 4th Floor PMB505
+              <br />
+              New York, NY 10016
+              <br />
+              United States
             </p>
           </section>
         </div>

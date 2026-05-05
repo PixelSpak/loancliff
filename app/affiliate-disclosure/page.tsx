@@ -34,7 +34,7 @@ export default function AffiliateDisclosurePage() {
               FTC Disclosure
             </h2>
             <p>
-              Loan Cliff Financial Research participates in affiliate marketing programs.
+              Spak Labs participates in affiliate marketing programs through LoanCliff.
               This means that when you click certain links on this Site and complete an
               application or transaction with a lender, we may receive a commission or
               referral fee from that lender. This is how we fund the free calculator and
@@ -125,11 +125,20 @@ export default function AffiliateDisclosurePage() {
 
           <section>
             <h2 className="font-serif text-xl font-semibold text-[#001229] mb-3">Contact</h2>
-            <p>
+            <p className="mb-3">
               Questions about our affiliate relationships:{" "}
               <a href="mailto:hello@loancliff.com" className="text-[#001229] underline hover:opacity-70">
                 hello@loancliff.com
               </a>
+            </p>
+            <p>
+              LoanCliff is operated by Spak Labs
+              <br />
+              353 Lexington Avenue, 4th Floor PMB505
+              <br />
+              New York, NY 10016
+              <br />
+              United States
             </p>
           </section>
         </div>

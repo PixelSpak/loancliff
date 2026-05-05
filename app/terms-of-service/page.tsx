@@ -79,7 +79,7 @@ export default function TermsOfServicePage() {
             </h2>
             <p>
               All content on the Site — including text, design, data compilations, and
-              calculation logic — is the property of Loan Cliff Financial Research or its
+              calculation logic — is the property of Spak Labs or its
               licensors and is protected by copyright and other intellectual property laws.
               You may not reproduce, distribute, or create derivative works without prior
               written permission.
@@ -123,7 +123,7 @@ export default function TermsOfServicePage() {
               Limitation of Liability
             </h2>
             <p>
-              TO THE FULLEST EXTENT PERMITTED BY LAW, LOAN CLIFF FINANCIAL RESEARCH SHALL
+              TO THE FULLEST EXTENT PERMITTED BY LAW, SPAK LABS SHALL
               NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE
               DAMAGES ARISING FROM YOUR USE OF, OR INABILITY TO USE, THE SITE OR ITS CONTENT,
               EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT SHALL OUR
@@ -154,11 +154,20 @@ export default function TermsOfServicePage() {
 
           <section>
             <h2 className="font-serif text-xl font-semibold text-[#001229] mb-3">Contact</h2>
-            <p>
+            <p className="mb-3">
               Questions:{" "}
               <a href="mailto:hello@loancliff.com" className="text-[#001229] underline hover:opacity-70">
                 hello@loancliff.com
               </a>
+            </p>
+            <p>
+              LoanCliff is operated by Spak Labs
+              <br />
+              353 Lexington Avenue, 4th Floor PMB505
+              <br />
+              New York, NY 10016
+              <br />
+              United States
             </p>
           </section>
         </div>
