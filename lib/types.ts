@@ -25,6 +25,7 @@ export type ProgramsData = Record<ProgramType, Program>;
 
 export interface SchoolProgram {
   coaPerYear: number;
+  coaInStatePerYear?: number;
   lengthYears?: number;
 }
 
@@ -60,6 +61,7 @@ export interface CalcInput {
   schoolId: string;
   programType: ProgramType;
   startYear: number;
+  residency?: "in-state" | "out-of-state";
 }
 
 export interface CalcSuccess {
@@ -79,6 +81,8 @@ export interface CalcSuccess {
   totalGap: number;
   monthlyEquivalent: number;
   citation: { ipedsYear: number; statute: string };
+  hasInStateRate: boolean;
+  coaInStatePerYear?: number;
 }
 
 export interface MissingSchoolResult {

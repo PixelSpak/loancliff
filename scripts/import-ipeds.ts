@@ -289,6 +289,7 @@ async function main() {
   //   tuition7 + fee7 = out-of-state grad tuition+fees (public schools)
   // IPEDS uses "." for missing values; parseInt(".") = NaN, caught by isNaN check.
   const coaByUnitid = new Map<string, number>();
+  const coaInStateByUnitid = new Map<string, number>();
 
   const parseIpeds = (v: string | undefined): number => {
     if (!v || v === "." || v === "") return NaN;
@@ -310,6 +311,14 @@ async function main() {
         const ti = parseIpeds(row["tuition5"]);
         const fi = parseIpeds(row["fee5"]);
         tuitionAndFees = (!isNaN(ti) ? ti : 0) + (!isNaN(fi) ? fi : 0);
+      } else {
+        // Also store the in-state rate for public schools
+        const ti = parseIpeds(row["tuition5"]);
+        const fi = parseIpeds(row["fee5"]);
+        const inStateTuitionFees = (!isNaN(ti) ? ti : 0) + (!isNaN(fi) ? fi : 0);
+        if (inStateTuitionFees > 0 && inStateTuitionFees !== tuitionAndFees) {
+          coaInStateByUnitid.set(unitid, inStateTuitionFees + LIVING_EXPENSE_ESTIMATE);
+        }
       }
     } else {
       const t = parseIpeds(row["tuition5"]);
@@ -356,7 +365,7 @@ async function main() {
   // ── Assemble output ────────────────────────────────────────────────────
   interface SchoolEntry {
     id: string; name: string; shortName?: string; state: string;
-    programs: Record<string, { coaPerYear: number }>;
+    programs: Record<string, { coaPerYear: number; coaInStatePerYear?: number }>;
   }
 
   const output: Record<string, SchoolEntry> = {};
@@ -386,11 +395,20 @@ async function main() {
     // Allow override-only schools (no IC_AY data) by falling back to 0 base — overrides will fill in.
     if (!coa && progSet.size === 0) continue;
 
-    const programs: Record<string, { coaPerYear: number }> = {};
+    const programs: Record<string, { coaPerYear: number; coaInStatePerYear?: number }> = {};
+    const coaInState = coaInStateByUnitid.get(unitid);
     for (const prog of progSet) {
       const overrideVal = overrides.get(`${unitid}:${prog}`);
       if (!overrideVal && !coa) continue; // no data at all for this program
-      programs[prog] = { coaPerYear: overrideVal ?? coa! };
+      const entry: { coaPerYear: number; coaInStatePerYear?: number } = {
+        coaPerYear: overrideVal ?? coa!,
+      };
+      // Only store in-state rate when it differs from the default (out-of-state) rate
+      // and there is no per-program override (overrides are assumed to be out-of-state)
+      if (!overrideVal && coaInState && coaInState !== entry.coaPerYear) {
+        entry.coaInStatePerYear = coaInState;
+      }
+      programs[prog] = entry;
       programCount++;
     }
 

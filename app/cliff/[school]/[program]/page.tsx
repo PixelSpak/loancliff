@@ -7,6 +7,7 @@ import { affiliateList } from "@/lib/affiliates";
 import { buildSchemaGraph } from "@/lib/schema";
 import { EmailCapture } from "@/components/EmailCapture";
 import { GapPageAnalytics } from "@/components/GapPageAnalytics";
+import { GapSection } from "@/components/GapSection";
 import { TrackedAffiliateLink } from "@/components/TrackedAffiliateLink";
 import type { ProgramType } from "@/lib/types";
 
@@ -89,8 +90,6 @@ export default async function ProgramPage({ params }: Props) {
     (p) => p !== program
   );
 
-  const aggregateCap = result.category === "professional" ? 200_000 : 100_000;
-
   return (
     <>
       <script
@@ -139,69 +138,14 @@ export default async function ProgramPage({ params }: Props) {
           </p>
         </div>
 
-        {/* ── Gap number card ── */}
-        <div className="bg-white border border-[#c4c6ce] rounded-lg p-10 flex flex-col items-center shadow-[0_12px_24px_rgba(0,0,0,0.04)]">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#44474d] mb-3">
-            Total Funding Gap
-          </p>
-          <p className="font-serif text-[64px] leading-none font-semibold text-[#ba1a1a] tabular-nums">
-            {fmt(result.totalGap)}
-          </p>
-          <p className="text-sm text-[#44474d] mt-4">
-            Over {result.lengthYears} years ·{" "}
-            <strong className="text-[#1b1c1e]">{fmt(result.gapPerYear)}/year</strong>{" "}
-            uncovered · ~{fmt(result.monthlyEquivalent)}/month
-          </p>
-        </div>
-
-        {/* ── Two-column grid ── */}
+        {/* ── Gap card + breakdown (client — handles residency toggle + aggregate warning) ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-
-          {/* Breakdown */}
-          <section
-            aria-label="Gap calculation breakdown"
-            className="lg:col-span-7 bg-white border border-[#c4c6ce] rounded-lg p-8 shadow-[0_12px_24px_rgba(0,0,0,0.04)] flex flex-col gap-5"
-          >
-            <h2 className="text-lg font-bold text-[#1b1c1e] border-b border-[#c4c6ce]/40 pb-3">
-              Cost &amp; Funding Breakdown
-            </h2>
-            <div className="flex flex-col text-base">
-              <div className="flex justify-between items-center py-3 border-b border-[#c4c6ce]/30">
-                <span className="text-[#44474d]">
-                  Cost of Attendance (IPEDS {result.citation.ipedsYear})
-                </span>
-                <span className="font-serif text-xl font-semibold text-[#1b1c1e] tabular-nums">
-                  {fmt(result.coaPerYear)}/yr
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-[#c4c6ce]/30">
-                <div className="flex items-center gap-2 text-[#44474d]">
-                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
-                  </svg>
-                  New Federal Cap — {result.category} programs
-                </div>
-                <span className="font-serif text-xl font-semibold text-[#1b1c1e] tabular-nums">
-                  {fmt(result.capPerYear)}/yr
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-[#c4c6ce]/30 text-sm text-[#74777e]">
-                <span>× {result.lengthYears} years, aggregate cap {fmt(aggregateCap)}</span>
-                <span className="font-bold text-[#ba1a1a] text-base tabular-nums">{fmt(result.totalGap)}</span>
-              </div>
-              <div className="flex justify-between items-center py-3 mt-1 bg-[#ffdad6]/20 px-3 rounded">
-                <span className="text-lg font-bold text-[#ba1a1a]">Funding Gap</span>
-                <span className="font-serif text-[28px] leading-none font-semibold text-[#ba1a1a] tabular-nums">
-                  ={fmt(result.totalGap)}
-                </span>
-              </div>
-            </div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.05em] text-[#74777e] flex items-center gap-1.5 mt-auto pt-2">
-              <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Source: IPEDS {result.citation.ipedsYear} · {result.citation.statute}
-            </p>
+          <section aria-label="Gap calculation" className="lg:col-span-7">
+            <GapSection
+              schoolId={school}
+              programType={program}
+              defaultResult={result}
+            />
           </section>
 
           {/* Bridge the gap */}
@@ -277,7 +221,7 @@ export default async function ProgramPage({ params }: Props) {
             },
             {
               q: `How was the ${fmt(result.totalGap)} figure calculated?`,
-              a: `${result.schoolName}'s published Cost of Attendance for the ${result.programLabel} program is ${fmt(result.coaPerYear)} per year (IPEDS ${result.citation.ipedsYear}). The new statutory cap for ${result.category} programs is ${fmt(result.capPerYear)} per year. The annual uncovered gap is ${fmt(result.gapPerYear)}. Over the standard ${result.lengthYears}-year program length, the total uncovered amount is ${fmt(result.totalGap)} — capped at the aggregate limit of ${fmt(aggregateCap)}.`,
+              a: `${result.schoolName}'s published Cost of Attendance for the ${result.programLabel} program is ${fmt(result.coaPerYear)} per year (IPEDS ${result.citation.ipedsYear}). The new statutory cap for ${result.category} programs is ${fmt(result.capPerYear)} per year. The annual uncovered gap is ${fmt(result.gapPerYear)}. Over the standard ${result.lengthYears}-year program length, the total uncovered amount is ${fmt(result.totalGap)} — capped at the aggregate limit of ${fmt(result.category === "professional" ? 200_000 : 100_000)}.`,
             },
             {
               q: `Is ${result.programShortLabel} classified as graduate or professional?`,

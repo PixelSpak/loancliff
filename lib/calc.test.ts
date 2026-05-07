@@ -25,6 +25,16 @@ const testSchools: SchoolsData = {
       jd: { coaPerYear: 108000 },
     },
   },
+  michigan: {
+    id: "michigan",
+    name: "University of Michigan",
+    state: "MI",
+    programs: {
+      // Public school: OOS vs in-state rates differ
+      md: { coaPerYear: 95000, coaInStatePerYear: 58000 },
+      jd: { coaPerYear: 88000, coaInStatePerYear: 60000 },
+    },
+  },
 };
 
 const testPrograms: ProgramsData = {
@@ -105,6 +115,41 @@ describe("computeGap", () => {
     expect(result.kind).toBe("missing_program");
     if (result.kind !== "missing_program") return;
     expect(result.schoolName).toBe("Harvard University");
+  });
+
+  it("uses in-state COA when residency=in-state and coaInStatePerYear is set", () => {
+    const result = computeGap(
+      { schoolId: "michigan", programType: "md", startYear: 2026, residency: "in-state" },
+      testSchools, testPrograms, testCaps
+    );
+    expect(result.kind).toBe("ok");
+    if (result.kind !== "ok") return;
+    expect(result.coaPerYear).toBe(58000);
+    expect(result.gapPerYear).toBe(58000 - 50000);   // 8000
+    expect(result.hasInStateRate).toBe(true);
+    expect(result.coaInStatePerYear).toBe(58000);
+  });
+
+  it("uses out-of-state COA by default (no residency param)", () => {
+    const result = computeGap(
+      { schoolId: "michigan", programType: "md", startYear: 2026 },
+      testSchools, testPrograms, testCaps
+    );
+    expect(result.kind).toBe("ok");
+    if (result.kind !== "ok") return;
+    expect(result.coaPerYear).toBe(95000);
+    expect(result.hasInStateRate).toBe(true);
+  });
+
+  it("hasInStateRate is false when school has no separate in-state rate", () => {
+    const result = computeGap(
+      { schoolId: "harvard", programType: "mba", startYear: 2026 },
+      testSchools, testPrograms, testCaps
+    );
+    expect(result.kind).toBe("ok");
+    if (result.kind !== "ok") return;
+    expect(result.hasInStateRate).toBe(false);
+    expect(result.coaInStatePerYear).toBeUndefined();
   });
 
   it("never produces a negative gap (low-COA, high-aid edge case)", () => {

@@ -28,7 +28,11 @@ export function computeGap(
 
   const program = programs[input.programType];
   const lengthYears = schoolProgram.lengthYears ?? program.defaultLengthYears;
-  const coaPerYear = schoolProgram.coaPerYear;
+  const useInState =
+    input.residency === "in-state" &&
+    !!schoolProgram.coaInStatePerYear &&
+    schoolProgram.coaInStatePerYear !== schoolProgram.coaPerYear;
+  const coaPerYear = useInState ? schoolProgram.coaInStatePerYear! : schoolProgram.coaPerYear;
   const capPerYear = caps.caps[program.category].annual;
   const aggregateCap = caps.caps[program.category].aggregate;
 
@@ -38,6 +42,10 @@ export function computeGap(
   const totalCap = Math.min(naiveCap, aggregateCap);
   const totalGap = Math.max(0, totalCoa - totalCap);
   const monthlyEquivalent = Math.round(totalGap / (lengthYears * 12));
+
+  const hasInStateRate =
+    !!schoolProgram.coaInStatePerYear &&
+    schoolProgram.coaInStatePerYear !== schoolProgram.coaPerYear;
 
   return {
     kind: "ok",
@@ -59,5 +67,7 @@ export function computeGap(
       ipedsYear: 2024,
       statute: caps.statute + ", effective " + caps.effective_date,
     },
+    hasInStateRate,
+    coaInStatePerYear: schoolProgram.coaInStatePerYear,
   };
 }
