@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { schools } from "@/lib/data";
+import { schools, programs } from "@/lib/data";
 import { getAllPosts } from "@/lib/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -25,6 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date("2026-05-07"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
+  }));
+
+  const programHubPages: MetadataRoute.Sitemap = Object.keys(programs).map((prog) => ({
+    url: `https://loancliff.com/cliff/program/${prog}`,
+    lastModified: new Date("2026-05-07"),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
   }));
 
   return [
@@ -54,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...learnPages,
     ...statePages,
+    ...programHubPages,
     ...programPages,
   ];
 }

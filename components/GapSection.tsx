@@ -110,36 +110,34 @@ export function GapSection({ schoolId, programType, defaultResult }: Props) {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* ── Residency toggle ── */}
-      {defaultResult.hasInStateRate && (
-        <div className="flex items-center justify-center gap-1 bg-[#f8fafc] border border-[#e2e8f0] rounded-lg p-1 w-fit mx-auto">
-          <button
-            type="button"
-            onClick={() => handleToggle(false)}
-            className={`text-xs font-semibold px-4 py-1.5 rounded transition-colors ${
-              !isInState
-                ? "bg-[#001229] text-white shadow-sm"
-                : "text-[#44474d] hover:text-[#1b1c1e]"
-            }`}
-          >
-            Out-of-state
-          </button>
-          <button
-            type="button"
-            onClick={() => handleToggle(true)}
-            className={`text-xs font-semibold px-4 py-1.5 rounded transition-colors ${
-              isInState
-                ? "bg-[#001229] text-white shadow-sm"
-                : "text-[#44474d] hover:text-[#1b1c1e]"
-            }`}
-          >
-            In-state
-          </button>
-        </div>
-      )}
-
-      {/* ── Gap number card ── */}
-      <div className="bg-white border border-[#c4c6ce] rounded-lg p-10 flex flex-col items-center shadow-[0_12px_24px_rgba(0,0,0,0.04)]">
+      {/* ── Gap number card (toggle lives inside to keep top edge flush with Bridge the Gap) ── */}
+      <div className="bg-white border border-[#c4c6ce] rounded-lg p-8 flex flex-col items-center shadow-[0_12px_24px_rgba(0,0,0,0.04)]">
+        {defaultResult.hasInStateRate && (
+          <div className="flex items-center gap-1 bg-[#f8fafc] border border-[#e2e8f0] rounded-lg p-1 mb-6">
+            <button
+              type="button"
+              onClick={() => handleToggle(false)}
+              className={`text-xs font-semibold px-4 py-1.5 rounded transition-colors ${
+                !isInState
+                  ? "bg-[#001229] text-white shadow-sm"
+                  : "text-[#44474d] hover:text-[#1b1c1e]"
+              }`}
+            >
+              Out-of-state
+            </button>
+            <button
+              type="button"
+              onClick={() => handleToggle(true)}
+              className={`text-xs font-semibold px-4 py-1.5 rounded transition-colors ${
+                isInState
+                  ? "bg-[#001229] text-white shadow-sm"
+                  : "text-[#44474d] hover:text-[#1b1c1e]"
+              }`}
+            >
+              In-state
+            </button>
+          </div>
+        )}
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#44474d] mb-3">
           Total Funding Gap{isInState ? " (In-State)" : ""}
         </p>

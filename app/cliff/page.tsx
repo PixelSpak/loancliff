@@ -106,7 +106,7 @@ export default function CliffIndexPage() {
               return (
                 <Link
                   key={prog}
-                  href={`/?program=${prog}`}
+                  href={`/cliff/program/${prog}`}
                   className="group bg-white border border-[#c4c6ce] rounded-lg p-4 hover:border-[#001229] transition-colors flex flex-col gap-1.5"
                 >
                   <span className="text-base font-bold text-[#1b1c1e] group-hover:text-[#001229] transition-colors">
