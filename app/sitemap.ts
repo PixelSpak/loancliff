@@ -19,12 +19,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const states = [...new Set(Object.values(schools).map((s) => s.state).filter(Boolean))];
+  const statePages: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `https://loancliff.com/cliff/state/${state.toLowerCase()}`,
+    lastModified: new Date("2026-05-07"),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: "https://loancliff.com",
       lastModified: new Date("2026-05-04"),
       changeFrequency: "monthly",
       priority: 1.0,
+    },
+    {
+      url: "https://loancliff.com/cliff",
+      lastModified: new Date("2026-05-07"),
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
     {
       url: "https://loancliff.com/learn",
@@ -39,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     ...learnPages,
+    ...statePages,
     ...programPages,
   ];
 }
