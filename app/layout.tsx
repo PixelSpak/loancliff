@@ -74,6 +74,7 @@ const siteSchema = {
 };
 
 const FOOTER_LINKS: { label: string; href: string }[] = [
+  { label: "Browse Schools",     href: "/cliff" },
   { label: "Learn",              href: "/learn" },
   { label: "Methodology",        href: "/methodology" },
   { label: "Privacy Policy",     href: "/privacy-policy" },
